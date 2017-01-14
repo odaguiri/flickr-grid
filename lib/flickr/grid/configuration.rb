@@ -7,6 +7,9 @@ module Flickr
     def self.configure
       self.configuration ||= Configuration.new
       yield(configuration)
+
+      FlickRaw.api_key = configuration.api_token
+      FlickRaw.shared_secret = configuration.shared_secret
     end
 
     class Configuration

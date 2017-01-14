@@ -6,18 +6,16 @@ class Flickr::GridTest < Minitest::Test
   end
 
   def test_that_has_configure_api_token
-    Flickr::Grid.configure do |config|
-      config.api_token = 'APITOKEN'
-    end
-
+    Flickr::Grid.configuration.api_token = 'APITOKEN'
     assert_equal 'APITOKEN', Flickr::Grid.configuration.api_token
   end
 
   def test_that_has_configure_shared_secret
-    Flickr::Grid.configure do |config|
-      config.shared_secret = 'SHAREDSECRET'
-    end
-
+    Flickr::Grid.configuration.shared_secret = 'SHAREDSECRET'
     assert_equal 'SHAREDSECRET', Flickr::Grid.configuration.shared_secret
+  end
+
+  def test_that_has_flickr_object
+    assert flickr
   end
 end
