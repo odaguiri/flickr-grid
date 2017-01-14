@@ -1,4 +1,4 @@
-require "flickr/grid/version"
+require 'flickr/grid/version'
 
 module Flickr
   module Grid

@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'Guardfile'
+    - 'flickr-grid.gemspec'
+    - 'bin/**/*'
+    - 'test/**/*'
+
+Documentation:
+  Enabled: false
