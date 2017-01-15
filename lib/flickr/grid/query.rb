@@ -1,28 +1,23 @@
 module Flickr
   module Grid
     class Query
-      attr_reader :photos, :dir
+      attr_reader :collage, :photos, :dir
 
       def initialize(keywords)
         @keywords = keywords
         @photos = []
+        @collage = nil
         @dir = nil
-        @options = {
-          per_page: 1,
-          page: 1,
-          sort: 'interestingness-desc',
-          content_type: 1,
-          media: :photos
-        }
+        @options = { per_page: 1, page: 1,
+                     sort: 'interestingness-desc',
+                     content_type: 1, media: :photos }
       end
 
       def process(output)
         Dir.mktmpdir do |dir|
           @dir = dir
-
           process_photos
           process_collage(output)
-
           yield
         end
       end
@@ -43,7 +38,7 @@ module Flickr
       end
 
       def process_collage(output)
-        Flickr::Grid::Collage.new(@dir, output).process
+        @collage = Flickr::Grid::Collage.new(@dir, output).process
       end
     end
   end

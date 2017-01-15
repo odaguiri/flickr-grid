@@ -3,9 +3,9 @@ require 'rmagick/screwdrivers'
 require 'flickraw'
 require 'flickr/grid/version'
 require 'flickr/grid/configuration'
-require 'flickr/grid/query'
 require 'flickr/grid/photo'
 require 'flickr/grid/collage'
+require 'flickr/grid/query'
 
 module Flickr
   module Grid

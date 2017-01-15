@@ -11,13 +11,13 @@ class Flickr::Grid::QueryTest < Minitest::Test
     keywords = %w(bee fish bear white black coffee ruby train music life)
     query = Flickr::Grid::Query.new(keywords)
 
-    filename = "#{absolute_path('collage')}/collage.jpg"
+    filename = "#{absolute_path('collages')}/query-test-collage.jpg"
     query.process(filename) do 
       temp = Dir["#{query.dir}/*"]
 
       assert_equal 10, query.photos.size
       query.photos.each { |photo| assert temp.include?(photo) }
-      assert File.exist?(filename)
+      assert File.exist?(query.collage.filename)
     end
   end
 
