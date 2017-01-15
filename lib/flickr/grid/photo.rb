@@ -1,15 +1,15 @@
 module Flickr
   module Grid
     class Photo
-      def initialize(options = {})
-        @id = options[:id]
-        @dir = options[:dir]
+      def initialize(id, dir)
+        @id = id
+        @dir = dir
         @url = nil
         @tempfile = nil
       end
 
       def download
-        return nil if url.nil?
+        return nil if @id.nil? || url.nil?
         file = open(url)
         File.open(tempfile, 'wb') do |f|
           f.write(file.read)
