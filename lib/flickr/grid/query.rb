@@ -1,44 +1,35 @@
 module Flickr
   module Grid
     class Query
-      attr_reader :collage, :photos, :dir
+      LIMIT = 10
+
+      attr_reader :keywords, :photos
 
       def initialize(keywords)
         @keywords = keywords
         @photos = []
-        @collage = nil
-        @dir = nil
-        @options = { per_page: 1, page: 1,
-                     sort: 'interestingness-desc',
-                     content_type: 1, media: :photos }
+        @options = {
+          per_page: 1,
+          page: 1,
+          sort: 'interestingness-desc',
+          content_type: 1,
+          media: :photos
+        }
       end
 
-      def process(output)
-        Dir.mktmpdir do |dir|
-          @dir = dir
-          process_photos
-          process_collage(output)
-          yield
-        end
+      def search
+        process(@keywords)
+        @photos
       end
 
       private
 
-      def search(keyword)
-        Flickr::Grid.api.photos.search(
-          @options.merge(text: keyword)
-        )[0]
-      end
-
-      def process_photos
-        @photos = @keywords.map do |keyword|
-          id = search(keyword)['id']
-          Flickr::Grid::Photo.new(id, @dir).download
+      def process(keywords)
+        keywords.each do |keyword|
+          @photos << Flickr::Grid.api.photos.search(
+            @options.merge(text: keyword)
+          )[0]
         end
-      end
-
-      def process_collage(output)
-        @collage = Flickr::Grid::Collage.new(@dir, output).process
       end
     end
   end
