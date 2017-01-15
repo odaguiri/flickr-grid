@@ -7,6 +7,7 @@ require 'flickr/grid/builder'
 require 'flickr/grid/photo'
 require 'flickr/grid/collage'
 require 'flickr/grid/query'
+require 'flickr/grid/dictionary'
 
 module Flickr
   module Grid
