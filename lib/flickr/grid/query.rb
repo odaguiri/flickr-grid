@@ -16,13 +16,12 @@ module Flickr
         }
       end
 
-      def process
+      def process(output)
         Dir.mktmpdir do |dir|
           @dir = dir
-          @photos = @keywords.map do |keyword|
-            id = search(keyword)['id']
-            Flickr::Grid::Photo.new(id, dir).download
-          end
+
+          process_photos
+          process_collage(output)
 
           yield
         end
@@ -34,6 +33,17 @@ module Flickr
         Flickr::Grid.api.photos.search(
           @options.merge(text: keyword)
         )[0]
+      end
+
+      def process_photos
+        @photos = @keywords.map do |keyword|
+          id = search(keyword)['id']
+          Flickr::Grid::Photo.new(id, @dir).download
+        end
+      end
+
+      def process_collage(output)
+        Flickr::Grid::Collage.new(@dir, output).process
       end
     end
   end
