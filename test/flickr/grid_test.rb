@@ -16,6 +16,6 @@ class Flickr::GridTest < Minitest::Test
   end
 
   def test_that_has_flickr_object
-    assert flickr
+    assert Flickr::Grid.api
   end
 end

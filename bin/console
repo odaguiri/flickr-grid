@@ -11,4 +11,10 @@ require "flickr/grid"
 # Pry.start
 
 require "irb"
+
+Flickr::Grid.configure do |config|
+  config.api_token= ENV['FLICKR_COLLAGE_API_TOKEN']
+  config.shared_secret = ENV['FLICKR_COLLAGE_SHARED_SECRET']
+end
+
 IRB.start

@@ -1,7 +1,7 @@
 module Flickr
   module Grid
     class << self
-      attr_accessor :configuration
+      attr_accessor :configuration, :api
     end
 
     def self.configure
@@ -10,6 +10,7 @@ module Flickr
 
       FlickRaw.api_key = configuration.api_token
       FlickRaw.shared_secret = configuration.shared_secret
+      self.api = FlickRaw::Flickr.new
     end
 
     class Configuration
