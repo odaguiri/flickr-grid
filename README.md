@@ -1,10 +1,10 @@
 # Flickr::Grid
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/flickr/grid`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Create a collage with 10 photos using Flickr
 
 ## Installation
+
+Create your [Flickr](https://www.flickr.com/services/apps) account and generate an app. So you can get your *api_token* and *shared_secret*.
 
 Add this line to your application's Gemfile:
 
@@ -20,9 +20,33 @@ Or install it yourself as:
 
     $ gem install flickr-grid
 
+
 ## Usage
 
-TODO: Write usage instructions here
+### Command Line
+
+Optionally you can set the environments so you don't need to set everytime your api secrets
+
+    $ export FLICKR_COLLAGE_API_TOKEN=xxx
+    $ export FLICKR_COLLAGE_SHARED_SECRET=xxx
+    $ flickr-grid build --api-token=API_TOKEN --shared-secret=SHARED_SECRET --output=/Users/NAME/Documents/collage.jpg --keywords=beef cow sky life water fire wind earth rainbow
+
+
+### Plain Code
+
+First you need to configure
+
+```ruby
+Flickr::Grid.configure do |config|
+  config.api_token=API_TOKEN
+  config.shared_secret=SHARED_SECRET
+end
+
+
+keywords = %w(wind fire earth water)
+output = YOUR_ABSOLUTE_PATH/FILENAME.jpg
+Flickr::Grid.collage(keywords, output)
+```
 
 ## Development
 
@@ -32,7 +56,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/flickr-grid.
+Bug reports and pull requests are welcome on GitHub at https://github.com/odaguiri/flickr-grid.
 
 
 ## License
