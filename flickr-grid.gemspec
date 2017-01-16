@@ -18,12 +18,13 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.executables   = ["flickr-grid"]
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "flickraw", "~> 0.9.9"
   spec.add_runtime_dependency "rmagick", "~> 2.16.0"
   spec.add_runtime_dependency "rmagick-screwdrivers", "~> 0.2.0"
+  spec.add_runtime_dependency "thor", "~> 0.19.4"
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"

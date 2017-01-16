@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+require 'rubygems'
+require 'flickr/grid'
+
+module Flickr
+  module Grid
+    class CLI < Thor
+      desc 'build', 'Create your collage'
+      option :api_token, type: :string
+      option :shared_secret, type: :string
+      option :keywords, type: :array
+      option :output, type: :string
+
+      def build
+        if options['api_token']
+          Flickr::Grid.configuration.api_token = options['api_token']
+        end
+
+        if options['shared_secret']
+          Flickr::Grid.configuration.shared_secret = options['shared_secret']
+        end
+
+        Flickr::Grid.collage(options['keywords'], options['output'])
+      end
+    end
+  end
+end
+
+Flickr::Grid.configure do |config|
+  config.api_token= ENV['FLICKR_COLLAGE_API_TOKEN']
+  config.shared_secret = ENV['FLICKR_COLLAGE_SHARED_SECRET']
+end
+
+Flickr::Grid::CLI.start(ARGV)

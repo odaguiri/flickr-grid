@@ -13,5 +13,10 @@ require 'flickr/grid/dictionary'
 module Flickr
   module Grid
     include Magick
+
+    def self.collage(keywords = [], output = nil)
+      query = Flickr::Grid::Query.new(keywords).search
+      Flickr::Grid::Builder.new(query).call(output)
+    end
   end
 end
