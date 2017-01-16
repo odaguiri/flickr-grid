@@ -33,9 +33,13 @@ class Flickr::Grid::PhotoTest < Minitest::Test
   end
 
   def test_should_download_photo
-    Dir.mktmpdir do |dir|
-      photo = Flickr::Grid::Photo.new('32270736356', dir)
-      assert_equal [photo.download], Dir["#{dir}/*"]
-    end
+    photo = Flickr::Grid::Photo.new('32270736356', manipulated_photos_path)
+    assert_equal [photo.download], Dir["#{manipulated_photos_path}/*"]
+  end
+
+  private
+
+  def manipulated_photos_path
+    File.join(File.expand_path('../../', File.dirname(__FILE__)), 'integrations', 'manipulated_photos')
   end
 end

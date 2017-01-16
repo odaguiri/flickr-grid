@@ -1,20 +1,24 @@
 module Flickr
   module Grid
     class Photo
+      WIDTH = 1000
+      HEIGHT = 480
+
       def initialize(id, dir)
         @id = id
         @dir = dir
         @url = nil
         @tempfile = nil
+        @image = nil
       end
 
       def download
         return nil if @id.nil? || url.nil?
         file = open(url)
-        File.open(tempfile, 'wb') do |f|
-          f.write(file.read)
-        end
-        tempfile
+        image = Flickr::Grid::Image.from_blob(file.read).first
+        image.resize_to_fill!(WIDTH, HEIGHT)
+        image.write('jpeg:' + tempfile)
+        image.filename
       end
 
       private
