@@ -22,8 +22,7 @@ module Flickr
 
       def download_photos
         @temp_photos.each do |temp|
-          next unless temp
-          @photos << Flickr::Grid::Photo.new(temp['id'], @dir).download
+          @photos << Flickr::Grid::Photo.new(temp, @dir).download
         end
       end
 

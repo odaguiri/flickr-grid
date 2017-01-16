@@ -12,7 +12,7 @@ module Flickr
         @options = {
           per_page: 1,
           page: 1,
-          sort: 'interestingness-desc',
+          sort: 'interestingness',
           content_type: 1,
           media: :photos
         }
@@ -27,10 +27,12 @@ module Flickr
 
       def process(keywords)
         keywords.each do |keyword|
-          @photos << Flickr::Grid.api.photos.search(
-            @options.merge(text: keyword)
-          )[0]
+          search = Flickr::Grid.api.photos.search(@options.merge(text: keyword))[0]
+          if search
+            @photos << Flickr::Grid.api.photos.getInfo(photo_id: search['id'])
+          end
         end
+        @photos.compact!
 
         process(new_keywords) if @photos.size < LIMIT
       end

@@ -3,7 +3,7 @@ require 'test_helper'
 class Flickr::Grid::PhotoTest < Minitest::Test
   def test_should_have_id
     photo = Flickr::Grid::Photo.new('1', '/tmp/xxx')
-    assert_equal '1', photo.instance_variable_get(:@id)
+    assert_equal '1', photo.instance_variable_get(:@photo)
   end
 
   def test_should_have_dir
@@ -27,13 +27,15 @@ class Flickr::Grid::PhotoTest < Minitest::Test
   end
 
   def test_should_return_photo_url
-    photo = Flickr::Grid::Photo.new('32270736356', '/tmp/xxx')
+    temp = Flickr::Grid.api.photos.getInfo(photo_id: '32270736356')
+    photo = Flickr::Grid::Photo.new(temp, '/tmp/xxx')
     url = 'https://farm1.staticflickr.com/302/32270736356_329d8c4f13_b.jpg'
     assert_equal url, photo.send(:url)
   end
 
   def test_should_download_photo
-    photo = Flickr::Grid::Photo.new('32270736356', manipulated_photos_path)
+    temp = Flickr::Grid.api.photos.getInfo(photo_id: '32270736356')
+    photo = Flickr::Grid::Photo.new(temp, manipulated_photos_path)
     assert_equal [photo.download], Dir["#{manipulated_photos_path}/*"]
   end
 

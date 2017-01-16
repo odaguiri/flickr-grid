@@ -4,8 +4,8 @@ module Flickr
       WIDTH = 1000
       HEIGHT = 480
 
-      def initialize(id, dir)
-        @id = id
+      def initialize(photo, dir)
+        @photo = photo 
         @dir = dir
         @url = nil
         @tempfile = nil
@@ -13,7 +13,7 @@ module Flickr
       end
 
       def download
-        return nil if @id.nil? || url.nil?
+        return nil if @photo.nil? || url.nil?
         file = open(url)
         image = Flickr::Grid::Image.from_blob(file.read).first
         image.resize_to_fill!(WIDTH, HEIGHT)
@@ -24,9 +24,7 @@ module Flickr
       private
 
       def url
-        @url ||= FlickRaw.url_b(
-          Flickr::Grid.api.photos.getInfo(photo_id: @id)
-        )
+        @url ||= FlickRaw.url_b(@photo)
       rescue
         nil
       end
