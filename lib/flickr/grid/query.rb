@@ -6,6 +6,7 @@ module Flickr
       attr_reader :keywords, :photos
 
       def initialize(keywords)
+        @dictionary = Flickr::Grid::Dictionary.new
         @keywords = keywords
         @photos = []
         @options = {
@@ -30,6 +31,16 @@ module Flickr
             @options.merge(text: keyword)
           )[0]
         end
+
+        process(new_keywords) if @photos.size < LIMIT
+      end
+
+      def new_keywords
+        keywords = (1..(LIMIT - @photos.size)).map do |_i|
+          @dictionary.random_word
+        end
+        @keywords.concat(keywords)
+        keywords
       end
     end
   end
