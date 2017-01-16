@@ -7,7 +7,7 @@ module Flickr
 
       def initialize(keywords)
         @dictionary = Flickr::Grid::Dictionary.new
-        @keywords = keywords
+        @keywords = keywords || []
         @photos = []
         @options = {
           per_page: 1,
